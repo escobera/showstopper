@@ -1,4 +1,4 @@
-package showstopper
+package main
 
 import (
 	"errors"
@@ -51,6 +51,8 @@ func main() {
 					log.Fatal(err)
 					return
 				}
+
+				svc := service.ShowStopper{}
 
 				if err = svc.Run(cfg); err != nil {
 					log.Fatal(err)

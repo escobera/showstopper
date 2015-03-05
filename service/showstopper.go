@@ -3,6 +3,7 @@ package service
 import (
 	"fmt"
 
+	"github.com/escobera/showstopper/api"
 	"github.com/escobera/showstopper/resource"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
@@ -50,6 +51,10 @@ func (s *ShowStopper) Run(cfg Config) error {
 	r.GET("/", func(c *gin.Context) {
 		c.String(200, "hello world")
 	})
+
+	showApi := api.ShowApi{db: db}
+
+	r.POST("/shows", showApi.CreateShow)
 
 	// r.GET("/todo", todoResource.GetAllTodos)
 	// r.GET("/todo/:id", todoResource.GetTodo)
