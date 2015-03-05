@@ -1,0 +1,5 @@
+svchost: :3001
+dbuser: rafa
+dbpassword: ""
+dbhost: localhost
+dbname: showstopper
