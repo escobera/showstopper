@@ -8,20 +8,22 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
-type ShowApi struct {
+type ShowAPI struct {
 	Db gorm.DB
 }
 
-func (api *ShowApi) CreateShow(c *gin.Context) {
-	var show resource.Show
+func (api *ShowAPI) CreateShow(c *gin.Context) {
+	var showJSON resource.ShowJSON
 
-	c.Bind(&show)
+	c.Bind(&showJSON)
 
+	show := showJSON.Show
 	api.Db.Save(&show)
+
 	c.JSON(201, show)
 }
 
-func (api *ShowApi) UpdateShow(c *gin.Context) {
+func (api *ShowAPI) UpdateShow(c *gin.Context) {
 	showJSON := resource.ShowJSON{}
 
 	c.Bind(&showJSON)
@@ -35,7 +37,7 @@ func (api *ShowApi) UpdateShow(c *gin.Context) {
 	c.Data(204, gin.MIMEHTML, nil)
 }
 
-func (api *ShowApi) IndexShows(c *gin.Context) {
+func (api *ShowAPI) IndexShows(c *gin.Context) {
 	shows := make([]resource.Show, 0)
 
 	api.Db.Find(&shows)

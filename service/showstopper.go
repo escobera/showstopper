@@ -23,7 +23,7 @@ type ShowStopper struct {
 }
 
 func (s *ShowStopper) getDb(cfg Config) (gorm.DB, error) {
-	connectionString := fmt.Sprintf("user=%s dbname=%s sslmode=disable", cfg.DbUser, cfg.DbName)
+	connectionString := fmt.Sprintf("user=%s password=%s dbname=%s sslmode=disable", cfg.DbUser, cfg.DbPassword, cfg.DbName)
 
 	return gorm.Open("postgres", connectionString)
 }
@@ -55,12 +55,12 @@ func (s *ShowStopper) Run(cfg Config) error {
 		c.String(200, "hello world")
 	})
 
-	showApi := api.ShowApi{Db: db}
+	ShowAPI := api.ShowAPI{Db: db}
 
 	r.OPTIONS("/*cors", func(c *gin.Context) {})
-	r.GET("/shows", showApi.IndexShows)
-	r.POST("/shows", showApi.CreateShow)
-	r.PUT("/shows/:id", showApi.UpdateShow)
+	r.GET("/shows", ShowAPI.IndexShows)
+	r.POST("/shows", ShowAPI.CreateShow)
+	r.PUT("/shows/:id", ShowAPI.UpdateShow)
 
 	// r.GET("/todo", todoResource.GetAllTodos)
 	// r.GET("/todo/:id", todoResource.GetTodo)
