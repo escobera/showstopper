@@ -8,6 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	_ "github.com/lib/pq"
+	"github.com/tommy351/gin-cors"
 )
 
 type Config struct {
@@ -44,17 +45,22 @@ func (s *ShowStopper) Run(cfg Config) error {
 	if err != nil {
 		return err
 	}
+	db.LogMode(true)
 	defer db.Close()
 
 	r := gin.Default()
+	r.Use(cors.Middleware(cors.Options{}))
 
 	r.GET("/", func(c *gin.Context) {
 		c.String(200, "hello world")
 	})
 
-	showApi := api.ShowApi{db: db}
+	showApi := api.ShowApi{Db: db}
 
+	r.OPTIONS("/*cors", func(c *gin.Context) {})
+	r.GET("/shows", showApi.IndexShows)
 	r.POST("/shows", showApi.CreateShow)
+	r.PUT("/shows/:id", showApi.UpdateShow)
 
 	// r.GET("/todo", todoResource.GetAllTodos)
 	// r.GET("/todo/:id", todoResource.GetTodo)
