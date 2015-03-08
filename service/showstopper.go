@@ -7,7 +7,6 @@ import (
 	"github.com/escobera/showstopper/resource"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
-	_ "github.com/lib/pq"
 	"github.com/tommy351/gin-cors"
 )
 
@@ -45,7 +44,6 @@ func (s *ShowStopper) Run(cfg Config) error {
 	if err != nil {
 		return err
 	}
-	db.LogMode(true)
 	defer db.Close()
 
 	r := gin.Default()
@@ -61,13 +59,6 @@ func (s *ShowStopper) Run(cfg Config) error {
 	r.GET("/shows", ShowAPI.IndexShows)
 	r.POST("/shows", ShowAPI.CreateShow)
 	r.PUT("/shows/:id", ShowAPI.UpdateShow)
-
-	// r.GET("/todo", todoResource.GetAllTodos)
-	// r.GET("/todo/:id", todoResource.GetTodo)
-	// r.POST("/todo", todoResource.CreateTodo)
-	// r.PUT("/todo/:id", todoResource.UpdateTodo)
-	// r.PATCH("/todo/:id", todoResource.PatchTodo)
-	// r.DELETE("/todo/:id", todoResource.DeleteTodo)
 
 	r.Run(cfg.SvcHost)
 

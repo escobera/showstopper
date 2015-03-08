@@ -8,8 +8,8 @@ type Show struct {
 	TotalEpisodes uint8     `json:"totalEpisodes"`
 	EpisodeTime   uint8     `json:"episodeTime"`
 	StoppedAt     uint8     `json:"stoppedAt"`
-	CreatedAt     time.Time `json:"createdAt"`
-	UpdatedAt     time.Time `json:"updatedAt"`
+	CreatedAt     time.Time `json:"createdAt,omitempty"`
+	UpdatedAt     time.Time `json:"updatedAt,omitempty"`
 }
 
 type ShowJSON struct {
