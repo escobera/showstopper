@@ -59,6 +59,7 @@ func (s *ShowStopper) Run(cfg Config) error {
 	r.GET("/shows", ShowAPI.IndexShows)
 	r.POST("/shows", ShowAPI.CreateShow)
 	r.PUT("/shows/:id", ShowAPI.UpdateShow)
+	r.DELETE("/shows/:id", ShowAPI.DeleteShow)
 
 	r.Run(cfg.SvcHost)
 

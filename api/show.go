@@ -35,6 +35,15 @@ func (api *ShowAPI) UpdateShow(c *gin.Context) {
 	c.Data(204, gin.MIMEHTML, nil)
 }
 
+func (api *ShowAPI) DeleteShow(c *gin.Context) {
+	showJSON := resource.ShowJSON{}
+
+	showID, _ := strconv.Atoi(c.Params.ByName("id"))
+	showJSON.Show.ID = uint32(showID)
+	api.Db.Delete(&showJSON.Show)
+	c.Data(204, gin.MIMEHTML, nil)
+}
+
 func (api *ShowAPI) IndexShows(c *gin.Context) {
 	shows := []resource.Show{}
 	api.Db.Find(&shows)
